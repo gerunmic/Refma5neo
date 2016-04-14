@@ -1,0 +1,44 @@
+﻿@model List<Refma5neo.Models.WebArticle>
+
+@{
+    ViewBag.Title = "My Articles";
+}
+
+<h2>My Articles</h2>
+
+
+<p>
+    @Html.ActionLink("Add new article", "Create", new { }, new { @type = "button", @class = "btn btn-default" })
+</p>
+
+<table class="table" dir="auto" lang="@ViewBag.LangCode">
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="vertical-align:middle !important">
+               
+                <b>@Html.ActionLink(item.title, "Read", new { id = item.id }) </b>
+
+            </td>
+            <td style="text-align:right">
+
+                @if (item.url != null)
+                {
+
+                    <a title="Source" href="@Html.DisplayFor(modelItem => item.url)" class="btn-lg glyphicon glyphicon-link" style="text-decoration: none !important;">
+                        <span class="sr-only">Source</span>
+                    </a>
+
+                }
+
+                <a title="Delete" href="@Url.Action("Delete", new { id = item.id })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;">
+                    <span class="sr-only">Delete</span>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+

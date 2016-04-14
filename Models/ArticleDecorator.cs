@@ -84,7 +84,7 @@ namespace Refma5neo.Models
         {
             // returns all elements of the article with additional information for the view (such as if its a word, a special character, known etc.) the order must be exactly as it appears in the source article
             List<ViewArticleElement> viewElements = new List<ViewArticleElement>();
-            string[] allStrings = ExtractStringElements(article.PlainText);
+            string[] allStrings = ExtractStringElements(article.plaintext);
             foreach (var str in allStrings)
             {
                 if (dic.ContainsKey(str))

@@ -1,0 +1,186 @@
+﻿@using Refma.Models
+@model Refma.Models.WebArticle
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Read Article";
+}
+@section CustomJavascript {
+    <script type="text/javascript">
+
+        var currentLang = @Html.Raw(Json.Encode(Model.Lang.Code));
+        var currentArticleID = @Model.ID;
+
+        $(document).ready(function () {
+
+            getPercentageKnown();
+
+            function getPercentageKnown() {
+                var totalWords = $('span').length;
+                var numItemsKnown = $('.Known').length;
+                var percentageKnown = numItemsKnown * 100 / totalWords;
+
+                $('div#percentage').html(Math.round(percentageKnown) + "% words known in this article.");
+
+                savePercentage(currentArticleID, Math.round(percentageKnown));
+            }
+
+            function updateElement(eid, k) {
+                $.ajax({
+                    type: "POST",
+                    url: '/LangElement/UpdateElementJSON',
+                    data: { elementid: eid, knowledge: k },
+                    success: function () {
+                        // do not do anything
+                    }
+                });
+            }
+
+            function savePercentage(aid, p) {
+                $.ajax({
+                    type: "POST",
+                    url: '/WebArticles/UpdatePercentage',
+                    data: { id: aid, percentage: p },
+                    success: function () {
+                        // do not do anything
+                    }
+                });
+            }
+
+            function retrieveTranslations(eid) {
+                $.ajax({
+                    type: "POST",
+                    url: '/LangElementTranslation/GetTranslations',
+                    data: { langElementId: eid },
+                    datatype: "json",
+                    success: function (data) {
+
+                        
+                        $.each(data, function(index) {
+
+                            
+                            $('#'+eid).append("<p>"+  data[index].Value + "</p>");
+                        });
+                    }
+                });
+               
+            }
+
+            function changeClassForElement(eid, new1) {
+                $('span[data-eid="' + eid + '"]').each(function () {
+                    $(this).removeClass().addClass(new1);
+                });
+            }
+
+
+            $('body').on('click', 'button#setUnknown', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 0);
+                changeClassForElement(eid, "Unknown");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setSeen', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 1);
+                changeClassForElement(eid, "Seen");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setHard', function () {
+                var eid = $(this).attr("data-eid");
+
+                updateElement(eid, 2);
+                changeClassForElement(eid, "Difficult");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setKnown', function () {
+                var eid = $(this).attr("data-eid");
+
+                updateElement(eid, 3);
+                changeClassForElement(eid, "Known");
+                getPercentageKnown();
+            });
+
+            $('span').popover({
+                html: 'true',
+                trigger: 'focus',
+                placement: 'bottom',
+                container: 'body',
+                title: function () {
+                    return $(this).html() +  " <span class=\"glyphicon glyphicon-play-circle\" onclick=\"speak('"+currentLang +"','" + $(this).html() + "')\"></span>" ;
+                },
+                content: function () {
+
+                    
+                    retrieveTranslations($(this).attr('data-eid'));
+                    return '<div id="' + $(this).attr('data-eid') + '"></div>'+
+                        '<button id="setUnknown" type="button" class="btn btn-unknown" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
+                            '<button id="setSeen" type="button" class="btn btn-seen" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
+                            '<button id="setHard" type="button" class="btn btn-hard" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
+                              '<button id="setKnown" type="button" class="btn btn-known" data-eid="' + $(this).attr('data-eid') + '">3</button>';
+                }
+            });
+        });
+
+    </script>
+}
+
+
+<div dir="auto" lang="@Model.Lang.Code">
+    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
+
+    <h2>@Html.DisplayFor(model => model.Title)</h2>
+
+    <span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.Lang.Code','@Model.Title')"></span>
+
+    <div id="percentage"></div>
+    <hr />
+
+
+    <div class="main-article">
+        @foreach (var el in (List<ViewArticleElement>)ViewBag.ViewElements)
+        {
+
+            if (@el.IsNotAWord)
+            {
+                if (@el.Value.Contains("\n"))
+                {
+
+                    <br><br>
+                }
+                else
+                {
+                    @el.Value
+                }
+            }
+            else
+            {
+
+                var dataContent = "";
+                if (el.Translations.Count > 0)
+                {
+                    dataContent += "<table class='table'>";
+                    foreach (var item in el.Translations)
+                    {
+                        dataContent += "<tr><td>" + item + "</tr></td>";
+                    }
+                    dataContent += "</table>";
+
+                }
+ 
+                <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
+            }
+        }
+    </div>
+
+    <br />
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>

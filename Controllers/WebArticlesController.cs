@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Refma5neo.Models;
 
 namespace Refma5neo.Controllers
 {
@@ -11,7 +13,19 @@ namespace Refma5neo.Controllers
         // GET: WebArticles
         public ActionResult Index()
         {
-            return View();
+            string userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                using (GraphDbContext db = new GraphDbContext())
+                {
+                    //  ViewBag.LangCode = currentUser.TargetLang.Code;
+                
+                    var articles = db.getWebArticles(userId);
+
+                    return View(articles);
+                }
+            }
+            return View();// show nothing  return View();
         }
 
         // GET: WebArticles/Details/5

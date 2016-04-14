@@ -73,9 +73,11 @@ namespace Refma5neo.Controllers
             {
                 return View(model);
             }
-
+            
             // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.
             // Wenn Sie aktivieren möchten, dass Kennwortfehler eine Sperre auslösen, ändern Sie in "shouldLockout: true".
+
+            
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -293,7 +295,7 @@ namespace Refma5neo.Controllers
             {
                 return View("Error");
             }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
+            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId); 
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }

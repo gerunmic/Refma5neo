@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Refma5neo.Models
 {
-    public class GraphDbContext: IDisposable
+    public class GraphDbContext : IDisposable
     {
 
         private GraphClient client;
@@ -32,6 +32,21 @@ namespace Refma5neo.Models
             // todo: get all elements from an article from an user
             return null;
         }
+
+
+
+        public List<WebArticle> getWebArticles(string userid)
+        {
+            var res = client.Cypher.Match("(u:User)-[:reads_article]->(w:WebArticle)<-[:has_article]-(l:Language)")
+                .Where("u.Id = {userid} and w.title <> '' and w.url <> '' and l.code = u.TargetLangCode")
+                .WithParam("userid", userid)
+
+
+                .Return(w => w.As<WebArticle>())
+                .Results;
+            return res.ToList();
+        }
+
 
     }
 }

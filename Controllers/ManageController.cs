@@ -66,7 +66,7 @@ namespace Refma5neo.Controllers
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
-                HasPassword = HasPassword(),
+                HasPassword = HasPassword(), 
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),

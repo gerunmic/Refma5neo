@@ -275,10 +275,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\WebArticles\Create.cshtml" />
+    <Content Include="Views\WebArticles\Dashboard.cshtml" />
+    <Content Include="Views\WebArticles\Delete.cshtml" />
+    <Content Include="Views\WebArticles\Index.cshtml" />
+    <Content Include="Views\WebArticles\Read.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\WebArticles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
