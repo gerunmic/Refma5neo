@@ -1,0 +1,1080 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Boilerpipe.Net</name>
+    </assembly>
+    <members>
+        <member name="T:Boilerpipe.Net.BoilerpipeProcessingException">
+            <summary>
+              Exception for signaling failure in the processing pipeline.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.BoilerpipeProcessingException.#ctor">
+            <summary>
+              Initializes a new instance of the <see cref="T:Boilerpipe.Net.BoilerpipeProcessingException"/> class.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.BoilerpipeProcessingException.#ctor(System.String)">
+            <summary>
+              Initializes a new instance of the <see cref="T:Boilerpipe.Net.BoilerpipeProcessingException"/> class with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error. </param>
+        </member>
+        <member name="M:Boilerpipe.Net.BoilerpipeProcessingException.#ctor(System.String,System.Exception)">
+            <summary>
+              Initializes a new instance of the <see cref="T:Boilerpipe.Net.BoilerpipeProcessingException"/> class with a specified error message
+              and a
+              reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception. </param>
+            <param name="innerException">
+              The exception that is the cause of the current exception, or a null reference (Nothing in
+              Visual Basic) if no inner exception is specified.
+            </param>
+        </member>
+        <member name="M:Boilerpipe.Net.BoilerpipeProcessingException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+              Initializes a new instance of the <see cref="T:Boilerpipe.Net.BoilerpipeProcessingException"/> class with serialized data.
+            </summary>
+            <param name="info">
+              The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object
+              data about the exception being thrown.
+            </param>
+            <param name="context">
+              The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual
+              information about the source or destination.
+            </param>
+            <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. </exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException">
+              The class name is null or
+              <see cref="P:System.Exception.HResult"/> is zero (0).
+            </exception>
+        </member>
+        <member name="T:Boilerpipe.Net.IBoilerpipeDocumentSource">
+            <summary>
+              Something that can be represented as a <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeDocumentSource.ToTextDocument">
+            <summary>
+              Returns a <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.
+            </summary>
+            <returns>The <see cref="T:Boilerpipe.Net.Document.TextDocument"/></returns>
+        </member>
+        <member name="T:Boilerpipe.Net.IBoilerpipeExtractor">
+            <summary>
+              Describes a complete filter pipeline.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.IBoilerpipeFilter">
+            <summary>
+              A generic <see cref="T:Boilerpipe.Net.IBoilerpipeFilter"/>.
+              Takes a <see cref="T:Boilerpipe.Net.Document.TextDocument"/> and processes it somehow.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeFilter.Process(Boilerpipe.Net.Document.TextDocument)">
+            <summary>
+              Processes the given document <code>doc</code>.
+            </summary>
+            <param name="doc">The <see cref="T:Boilerpipe.Net.Document.TextDocument"/> that is to be processed.</param>
+            <returns><code>true</code> if changes have been made to the <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeExtractor.GetText(System.String)">
+            <summary>
+              Extracts text from the HTML code given as a string.
+            </summary>
+            <param name="html">The HTML code as a string.</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeExtractor.GetText(System.IO.TextReader)">
+            <summary>
+              text from the HTML code available from the given <see cref="T:System.IO.TextReader"/>.
+            </summary>
+            <param name="reader">The Reader containing the HTML</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeExtractor.GetText(Boilerpipe.Net.Document.TextDocument)">
+            <summary>
+              Extracts text from the given <see cref="T:Boilerpipe.Net.Document.TextDocument"/> object.
+            </summary>
+            <param name="doc">The <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="T:Boilerpipe.Net.Conditions.ITextBlockCondition">
+            <summary>
+              Evaluates whether a given <see cref="T:Boilerpipe.Net.Document.TextBlock"/> meets a certain condition.
+              Useful in combination with <see cref="T:Boilerpipe.Net.Labels.ConditionalLabelAction"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Conditions.ITextBlockCondition.MeetsCondition(Boilerpipe.Net.Document.TextBlock)">
+            <summary>
+              Returns <code>true</code> if the given <see cref="T:Boilerpipe.Net.Document.TextBlock"/> meets the defined condition.
+            </summary>
+            <param name="block">The <see cref="T:Boilerpipe.Net.Document.TextBlock"/> to test.</param>
+            <returns><code>true</code> if the condition is met.</returns>
+        </member>
+        <member name="T:Boilerpipe.Net.Document.TextBlock">
+            <summary>
+              Describes a block of text.
+              A block can be an "atomic" text element (i.e., a sequence of text that is not
+              interrupted by any HTML markup) or a compound of such atomic elements.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.MergeNext(Boilerpipe.Net.Document.TextBlock)">
+            <summary>
+            Merges specified <see cref="T:Boilerpipe.Net.Document.TextBlock"/> with this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>.
+            </summary>
+            <param name="other">Then <see cref="T:Boilerpipe.Net.Document.TextBlock"/> to merge with.</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.AddLabel(System.String)">
+            <summary>
+              Adds an arbitrary String label to this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>.
+            </summary>
+            <param name="label">The label to be added</param>
+            <remarks>
+              <seealso cref="T:Boilerpipe.Net.Labels.DefaultLabels"/>
+            </remarks>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.HasLabel(System.String)">
+            <summary>
+              Checks whether this <see cref="T:Boilerpipe.Net.Document.TextBlock"/> has the given label.
+            </summary>
+            <param name="label">The label to check</param>
+            <returns><code>true</code> if this block is marked by the given label.</returns>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.RemoveLabel(System.String)">
+            <summary>
+              Removes a label from this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>.
+            </summary>
+            <param name="label">The label to be removed.</param>
+            <returns>Returns <code>true</code> if the label have been removed.</returns>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.AddLabels(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+              Adds a set of labels to this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>. <code>null</code>-references are silently ignored.
+            </summary>
+            <param name="labels">The Labels to be added</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextBlock.AddLabels(System.String[])">
+            <summary>
+              Adds a set of labels to this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>. <code>null</code>-references are silently ignored.
+            </summary>
+            <param name="labels">The Labels to be added</param>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextBlock.Labels">
+            <summary>
+              Returns the labels associated to this <see cref="T:Boilerpipe.Net.Document.TextBlock"/>, or <code>null</code> if no such labels exist.
+            </summary>
+            <remarks>
+              NOTE: The returned instance is the one used directly in <see cref="T:Boilerpipe.Net.Document.TextBlock"/>. You have full access
+              to the data structure. However it is recommended to use the label-specific methods in <see cref="T:Boilerpipe.Net.Document.TextBlock"/>
+              whenever possible.
+            </remarks>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextBlock.ContainedTextElements">
+            <summary>
+              Returns the containedTextElements BitArray, or <code>null</code>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Document.TextDocument">
+            <summary>
+              A text document, consisting of one or more <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextDocument.#ctor(System.Collections.Generic.List{Boilerpipe.Net.Document.TextBlock})">
+            <summary>
+              Creates a new <see cref="T:Boilerpipe.Net.Document.TextDocument"/> with given <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s, and no title.
+            </summary>
+            <param name="textBlocks">The text blocks of this document</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextDocument.#ctor(System.String,System.Collections.Generic.List{Boilerpipe.Net.Document.TextBlock})">
+            <summary>
+              Creates a new <see cref="T:Boilerpipe.Net.Document.TextDocument"/> with given <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s and given title.
+            </summary>
+            <param name="title">The "main" title for this text document.</param>
+            <param name="textBlocks">The text blocks of this document</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextDocument.GetText(System.Boolean,System.Boolean)">
+            <summary>
+              Returns the <see cref="T:Boilerpipe.Net.Document.TextDocument"/>'s content, non-content or both
+            </summary>
+            <param name="includeContent">Whether to include TextBlocks marked as "content".</param>
+            <param name="includeNonContent">Whether to include TextBlocks marked as "non-content".</param>
+            <returns>The text.</returns>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextDocument.DebugString">
+            <summary>
+              Returns detailed debugging information about the contained <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s.
+            </summary>
+            <returns>Debug information</returns>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextDocument.TextBlocks">
+            <summary>
+              A list of <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s, in sequential order of appearance.
+            </summary>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextDocument.Title">
+            <summary>
+              Returns the "main" title for this document, or <code>null</code> if no such title has ben set.
+            </summary>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextDocument.Content">
+            <summary>
+              Returns the <see cref="T:Boilerpipe.Net.Document.TextDocument"/>'s content.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Document.TextDocumentStatistics">
+            <summary>
+              Provides shallow statistics on a given TextDocument
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Document.TextDocumentStatistics.#ctor(Boilerpipe.Net.Document.TextDocument,System.Boolean)">
+            <summary>
+              Computes statistics on a given <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.
+            </summary>
+            <param name="doc">The <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.</param>
+            <param name="contentOnly">if true then only content is counted</param>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextDocumentStatistics.AvgNumWords">
+            <summary>
+              Returns the average number of words at block-level (= overall number of words divided by the number of blocks).
+            </summary>
+        </member>
+        <member name="P:Boilerpipe.Net.Document.TextDocumentStatistics.NumWords">
+            <summary>
+              Returns the overall number of words in all blocks.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Estimators.SimpleEstimator">
+            <summary>
+              Estimates the "goodness" of a <see cref="T:Boilerpipe.Net.IBoilerpipeExtractor"/> on a given document.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Estimators.SimpleEstimator.Instance">
+            <summary>
+              Returns the singleton instance of <see cref="T:Boilerpipe.Net.Estimators.SimpleEstimator"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Estimators.SimpleEstimator.IsLowQuality(Boilerpipe.Net.Document.TextDocumentStatistics,Boilerpipe.Net.Document.TextDocumentStatistics)">
+            <summary>
+              <para>
+                Given the statistics of the document before and after applying the <see cref="T:Boilerpipe.Net.IBoilerpipeExtractor"/>
+                can we regard the extraction quality (too) low?
+              </para>
+              <para>
+                Works well with <see cref="T:Boilerpipe.Net.Extractors.DefaultExtractor"/>, <see cref="T:Boilerpipe.Net.Extractors.ArticleExtractor"/> and others.
+              </para>
+            </summary>
+            <param name="dsBefore"></param>
+            <param name="dsAfter"></param>
+            <returns>true if low quality is to be expected.</returns>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.ArticleExtractor">
+            <summary>
+              A full-text extractor which is tuned towards news articles. In this scenario
+              it achieves higher accuracy than <see cref="T:Boilerpipe.Net.Extractors.DefaultExtractor"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.BaseExtractor">
+            <summary>
+                The base class of Extractors. Also provides some helper methods to quickly
+                retrieve the text that remained after processing.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.BaseExtractor.GetText(System.String)">
+            <summary>
+                Extracts text from the HTML code given as a string.
+            </summary>
+            <param name="html">The HTML code as a string.</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.BaseExtractor.GetText(System.IO.TextReader)">
+            <summary>
+                text from the HTML code available from the given <see cref="T:System.IO.TextReader"/>.
+            </summary>
+            <param name="reader">The Reader containing the HTML</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.BaseExtractor.GetText(Boilerpipe.Net.Document.TextDocument)">
+            <summary>
+                Extracts text from the given <see cref="T:Boilerpipe.Net.Document.TextDocument"/> object.
+            </summary>
+            <param name="doc">The <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.BaseExtractor.Process(Boilerpipe.Net.Document.TextDocument)">
+            <summary>
+                Processes the given document <code>doc</code>.
+            </summary>
+            <param name="doc">The <see cref="T:Boilerpipe.Net.Document.TextDocument"/> that is to be processed.</param>
+            <returns><code>true</code> if changes have been made to the <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.BaseExtractor.GetText(Sax.Net.InputSource)">
+            <summary>
+                Extracts text from the HTML code available from the given <see cref="T:Sax.Net.InputSource"/>.
+            </summary>
+            <param name="inputSource">The <see cref="T:Sax.Net.InputSource"/> containing the HTML.</param>
+            <returns>The extracted text.</returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.ArticleExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.ArticleExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.ArticleSentencesExtractor">
+            <summary>
+              A full-text extractor which is tuned towards extracting sentences from news articles.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.ArticleSentencesExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.ArticleSentencesExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.CanolaExtractor">
+            <summary>
+              A full-text extractor trained on <a href="http://krdwrd.org/">krdwrd</a>
+              <a href="https://krdwrd.org/trac/attachment/wiki/Corpora/Canola/CANOLA.pdf">Canola</a>.
+              Works well with <see cref="T:Boilerpipe.Net.Estimators.SimpleEstimator"/>, too.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CanolaExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.CanolaExtractor"/>
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CanolaExtractor.Classifier">
+            <summary>
+              The actual classifier, exposed.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.CommonExtractors">
+            <summary>
+            Provides quick access to common <see cref="T:Boilerpipe.Net.IBoilerpipeExtractor"/>s.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CommonExtractors.ArticleExtractor">
+            <summary>
+              Works very well for most types of Article-like HTML.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CommonExtractors.DefaultExtractor">
+            <summary>
+              Usually worse than <see cref="F:Boilerpipe.Net.Extractors.CommonExtractors.ArticleExtractor"/>, but simpler/no heuristics.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CommonExtractors.LargestContentExtractor">
+            <summary>
+              Like <see cref="F:Boilerpipe.Net.Extractors.CommonExtractors.DefaultExtractor"/>, but keeps the largest text block only.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CommonExtractors.CanolaExtractor">
+            <summary>
+              Trained on krdwrd Canola (different definition of "boilerplate"). You may give it a try.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.CommonExtractors.KeepEverythingExtractor">
+            <summary>
+            Dummy Extractor; should return the input text. Use this to double-check
+            that your problem is within a particular <see cref="T:Boilerpipe.Net.IBoilerpipeExtractor"/>, or
+            somewhere else.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.DefaultExtractor">
+            <summary>
+              A quite generic full-text extractor.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.DefaultExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.DefaultExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.KeepEverythingExtractor">
+            <summary>
+            A full-text extractor that keeps everything.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.KeepEverythingExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.KeepEverythingExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.KeepEverythingWithMinKWordsExtractor">
+            <summary>
+              A full-text extractor which extracts the largest text component of a page.
+              For news articles, it may perform better than the <see cref="T:Boilerpipe.Net.Extractors.DefaultExtractor"/>,
+              but usually worse than <see cref="T:Boilerpipe.Net.Extractors.ArticleExtractor"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Extractors.KeepEverythingWithMinKWordsExtractor.#ctor(System.Int32)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Extractors.KeepEverythingWithMinKWordsExtractor"/>
+            </summary>
+            <param name="kMin"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.LargestContentExtractor">
+            <summary>
+              A full-text extractor which extracts the largest text component of a page.
+              For news articles, it may perform better than the <see cref="T:Boilerpipe.Net.Extractors.DefaultExtractor"/>,
+              but usually worse than <see cref="T:Boilerpipe.Net.Extractors.ArticleExtractor"/>.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.LargestContentExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.LargestContentExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Extractors.NumWordsRulesExtractor">
+            <summary>
+              A quite generic full-text extractor solely based upon the number of words per
+              block (the current, the previous and the next block).
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Extractors.NumWordsRulesExtractor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Extractors.NumWordsRulesExtractor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.DensityRulesClassifier">
+            <summary>
+              Classifies <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s as content/not-content through rules that have
+              been determined using the C4.8 machine learning algorithm, as described in the
+              paper "Boilerplate Detection using Shallow Text Features", particularly using
+              text densities and link densities.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.DensityRulesClassifier.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.DensityRulesClassifier"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.HeuristicFilterBase">
+            <summary>
+              Base class for some heuristics that are used by boilerpipe filters.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter">
+            <summary>
+              Marks all blocks as "non-content" that occur after blocks that have been
+              marked <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.INDICATES_END_OF_TEXT"/>. These marks are ignored
+              unless a minimum number of words in content blocks occur before this mark (default: 60).
+              This can be used in conjunction with an upstream <see cref="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder"/>.
+            </summary>
+            <seealso cref="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder"/>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter.DefaultInstance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter"/> with min 60 words.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter.Instance200">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter"/> with min 200 words.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter.#ctor(System.Int32)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter"/>
+            </summary>
+            <param name="minNumWords">The minimun number of words.</param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFromEndFilter">
+            <summary>
+              Marks all blocks as "non-content" that occur after blocks that have been
+              marked <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.INDICATES_END_OF_TEXT"/>, and after any content block.
+              This filter can be used in conjunction with an upstream <see cref="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder"/>.
+            </summary>
+            <seealso cref="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder"/>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFromEndFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFromEndFilter"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.KeepLargestFulltextBlockFilter">
+            <summary>
+              <para>
+                Keeps the largest <see cref="T:Boilerpipe.Net.Document.TextBlock"/> only (by the number of words). In case of
+                more than one block with the same number of words, the first block is chosen.
+                All discarded blocks are marked "not content" and flagged as <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.MIGHT_BE_CONTENT"/>
+              </para>
+              <para>
+                *
+                As opposed to <see cref="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter"/>, the number of words are
+                computed using <see cref="M:Boilerpipe.Net.Filters.English.HeuristicFilterBase.GetNumFullTextWords(Boilerpipe.Net.Document.TextBlock)"/>, which only counts
+                words that occur in text elements with at least 9 words and are thus believed to be full text.
+              </para>
+              <para>
+                NOTE: Without language-specific fine-tuning (i.e., running the default instance), this filter
+                may lead to suboptimal results. You better use <see cref="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter"/> instead, which
+                works at the level of number-of-words instead of text densities.
+              </para>
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.KeepLargestFulltextBlockFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.KeepLargestFulltextBlockFilter"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.MinFulltextWordsFilter">
+            <summary>
+              Keeps only those content blocks which contain at least k full-text words
+              (measured by <see cref="M:Boilerpipe.Net.Filters.English.HeuristicFilterBase.GetNumFullTextWords(Boilerpipe.Net.Document.TextBlock)"/>. k is 30 by default.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.MinFulltextWordsFilter.DefaultInstance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.MinFulltextWordsFilter"/> with 30 words.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.English.MinFulltextWordsFilter.#ctor(System.Int32)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.English.MinFulltextWordsFilter"/>
+            </summary>
+            <param name="minWords">The min number of words.</param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.NumWordsRulesClassifier">
+            <summary>
+              Classifies <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s as content/not-content through rules that have
+              been determined using the C4.8 machine learning algorithm, as described in
+              the paper "Boilerplate Detection using Shallow Text Features" (WSDM 2010),
+              particularly using number of words per block and link density per block.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.NumWordsRulesClassifier.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.NumWordsRulesClassifier"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder">
+            <summary>
+              Finds blocks which are potentially indicating the end of an article text and
+              marks them with <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.INDICATES_END_OF_TEXT"/>. This can be used
+              in conjunction with a downstream <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter"/>.
+            </summary>
+            <see cref="T:Boilerpipe.Net.Filters.English.IgnoreBlocksAfterContentFilter"/>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.English.TerminatingBlocksFinder.StartsWithNumber(System.String,System.Int32,System.String[])">
+             Checks whether the given text t starts with a sequence of digits,
+             followed by one of the given strings.
+            
+             @param t
+                        The text to examine
+             @param len
+                        The length of the text to examine
+             @param str
+                        Any strings that may follow the digits.
+             @return true if at least one combination matches
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter">
+            <summary>
+              Adds the labels of the preceding block to the current block, optionally adding a prefix.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter"/> with no prefix.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter.InstancePre">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter"/> with ^ as prefix.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter.#ctor(System.String)">
+            <summary>
+              Creates a new <see cref="T:Boilerpipe.Net.Filters.Heuristics.AddPrecedingLabelsFilter"/> instance.
+            </summary>
+            <param name="labelPrefix">The label prefix.</param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.ArticleMetadataFilter">
+            <summary>
+              Article metadata filter.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.ArticleMetadataFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.ArticleMetadataFilter"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion">
+            <summary>
+              Fuses adjacent blocks if their distance (in blocks) does not exceed a certain limit.
+              This probably makes sense only in cases where an upstream filter already has removed some blocks.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion.MaxDistance1">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion"/> with max distance 1.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion.MaxDistance1SameTaglevel">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion"/> with max distance 1 and same tag level.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion.MaxDistance1ContentOnly">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion"/> with max distance 1 and content only.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion.MaxDistance1ContentOnlySameTaglevel">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion"/> with max distance 1, content only and same tag level.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion.#ctor(System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+              Creates a new <see cref="T:Boilerpipe.Net.Filters.Heuristics.BlockProximityFusion"/> instance.
+            </summary>
+            <param name="maxBlocksDistance">The maximum distance in blocks.</param>
+            <param name="contentOnly">Only process content.</param>
+            <param name="sameTagLevelOnly">Only process if same tag level.</param>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.ContentFusion.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.ContentFusion"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.DocumentTitleMatchClassifier">
+            <summary>
+             Marks <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s which contain parts of the HTML
+             <code>&lt;TITLE&gt;</code> tag, using some heuristics which are quite
+             specific to the news domain.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Heuristics.DocumentTitleMatchClassifier.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Heuristics.DocumentTitleMatchClassifier"/>
+            </summary>
+            <param name="title">the title to match.</param>
+        </member>
+        <member name="P:Boilerpipe.Net.Filters.Heuristics.DocumentTitleMatchClassifier.PotentialTitles">
+            <summary>
+            Returns the potential titles
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.ExpandTitleToContentFilter">
+            <summary>
+              Marks all <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s "content" which are between the headline and the part that
+              has already been marked content, if they are marked <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.MIGHT_BE_CONTENT"/>.
+              <para>
+                This filter is quite specific to the news domain.
+              </para>
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.ExpandTitleToContentFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.ExpandTitleToContentFilter"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter">
+            <summary>
+              Keeps the largest <see cref="T:Boilerpipe.Net.Document.TextBlock"/> only (by the number of words). In case of
+              more than one block with the same number of words, the first block is chosen.
+              All discarded blocks are marked "not content" and flagged as
+              <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.MIGHT_BE_CONTENT"/>.
+            </summary>
+            <remarks>
+              Note that, by default, only TextBlocks marked as "content" are taken into consideration.
+            </remarks>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter"/>
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter.InstanceExpandToSameTaglevel">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter.#ctor(System.Boolean)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Heuristics.KeepLargestBlockFilter"/>
+            </summary>
+            <param name="expandToSameLevelText"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.LabelFusion">
+            <summary>
+              Fuses adjacent blocks if their labels are equal.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.LabelFusion.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.LabelFusion"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Heuristics.LabelFusion.#ctor(System.String)">
+            <summary>
+              Creates a new <see cref="T:Boilerpipe.Net.Filters.Heuristics.LabelFusion"/> instance.
+            </summary>
+            <param name="labelPrefix"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Heuristics.SimpleBlockFusionProcessor">
+            <summary>
+              Merges two subsequent blocks if their text densities are equal.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Heuristics.SimpleBlockFusionProcessor.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Filters.Heuristics.SimpleBlockFusionProcessor"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.BoilerplateBlockFilter">
+            <summary>
+              Removes <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s which have explicitly been marked as "not content".
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.BoilerplateBlockFilter.Instance">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.BoilerplateBlockFilter"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.InvertedFilter">
+            <summary>
+              Reverts the "isContent" flag for all <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.InvertedFilter.Instance">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.InvertedFilter"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.LabelToBoilerplateFilter">
+            <summary>
+              Marks all blocks that contain a given label as "boilerplate".
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.LabelToBoilerplateFilter.InstanceStrictlyNotContent">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.LabelToBoilerplateFilter"/> with label
+              <see cref="F:Boilerpipe.Net.Labels.DefaultLabels.STRICTLY_NOT_CONTENT"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Simple.LabelToBoilerplateFilter.#ctor(System.String[])">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Simple.LabelToBoilerplateFilter"/>
+            </summary>
+            <param name="label"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.LabelToContentFilter">
+            <summary>
+              Marks all blocks that contain a given label as "content".
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Simple.LabelToContentFilter.#ctor(System.String[])">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Simple.LabelToContentFilter"/>
+            </summary>
+            <param name="label"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.MarkEverythingContentFilter">
+            <summary>
+              Marks all blocks as content.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.MarkEverythingContentFilter.Instance">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.MarkEverythingContentFilter"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter">
+            <summary>
+              Keeps only blocks that have at least one segment fragment ("clause") with at
+              least <em>k</em> words (default: 5).
+            </summary>
+            <remarks>
+              NOTE: You might consider using the <see cref="T:Boilerpipe.Net.Filters.Simple.SplitParagraphBlocksFilter"/> upstream
+            </remarks>
+            <seealso cref="T:Boilerpipe.Net.Filters.Simple.SplitParagraphBlocksFilter"/>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter.Instance">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter.#ctor(System.Int32)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter"/>
+            </summary>
+            <param name="minWords"></param>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter.#ctor(System.Int32,System.Boolean)">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter"/>
+            </summary>
+            <param name="minWords"></param>
+            <param name="acceptClausesWithoutDelimiter"></param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.MinWordsFilter">
+            <summary>
+            Keeps only those content blocks which contain at least <c>k</c> words.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Filters.Simple.MinWordsFilter.#ctor(System.Int32)">
+            <summary>
+            Creates a new instance of <see cref="T:Boilerpipe.Net.Filters.Simple.MinWordsFilter"/>
+            </summary>
+            <param name="minWords">the number of words</param>
+        </member>
+        <member name="T:Boilerpipe.Net.Filters.Simple.SplitParagraphBlocksFilter">
+            <summary>
+              Splits TextBlocks at paragraph boundaries.
+            </summary>
+            <remarks>
+              NOTE: This is not fully supported (i.e., it will break highlighting support
+              via <see cref="P:Boilerpipe.Net.Document.TextBlock.ContainedTextElements"/>), but this one probably is necessary for some other
+              filters.
+            </remarks>
+            <seealso cref="T:Boilerpipe.Net.Filters.Simple.MinClauseWordsFilter"/>
+        </member>
+        <member name="F:Boilerpipe.Net.Filters.Simple.SplitParagraphBlocksFilter.Instance">
+            <summary>
+              Returns the singleton instance for <see cref="T:Boilerpipe.Net.Filters.Simple.SplitParagraphBlocksFilter"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Labels.ConditionalLabelAction">
+            <summary>
+              Adds labels to a <see cref="T:Boilerpipe.Net.Document.TextBlock"/> if the given criteria are met.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Labels.LabelAction">
+            <summary>
+              Helps adding labels to <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s.
+            </summary>
+            <seealso cref="T:Boilerpipe.Net.Labels.ConditionalLabelAction"/>
+        </member>
+        <member name="M:Boilerpipe.Net.Labels.ConditionalLabelAction.#ctor(Boilerpipe.Net.Conditions.ITextBlockCondition,System.String[])">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Labels.ConditionalLabelAction"/>
+            </summary>
+            <param name="condition">the condition</param>
+            <param name="labels">the labels to add</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Labels.ConditionalLabelAction.AddTo(Boilerpipe.Net.Document.TextBlock)">
+            <summary>
+              Adds the labels to the <see cref="T:Boilerpipe.Net.Document.TextBlock"/> if the condition is met.
+            </summary>
+            <param name="block">The <see cref="T:Boilerpipe.Net.Document.TextBlock"/> to add the labels to.</param>
+        </member>
+        <member name="T:Boilerpipe.Net.Labels.DefaultLabels">
+            <summary>
+              Some pre-defined labels which can be used in conjunction with
+              <see cref="M:Boilerpipe.Net.Document.TextBlock.AddLabel(System.String)"/> and <see cref="M:Boilerpipe.Net.Document.TextBlock.HasLabel(System.String)"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler">
+            <summary>
+              A simple ContentHandler used by <see cref="T:Boilerpipe.Net.Sax.BoilerpipeHtmlParser"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler.#ctor">
+            <summary>
+              Constructs a <see cref="T:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler"/> using the
+              <see cref="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary"/>.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler.#ctor(Boilerpipe.Net.Sax.TagActionDictionary)">
+            <summary>
+              Constructs a <see cref="T:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler"/> using the given
+              <see cref="T:Boilerpipe.Net.Sax.TagActionDictionary"/>.
+            </summary>
+            <param name="tagActions">
+              The <see cref="T:Boilerpipe.Net.Sax.TagActionDictionary"/> to use, e.g. <see cref="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary"/>.
+            </param>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler.Recycle">
+            <summary>
+              Recycles this instance.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.BoilerpipeHtmlParser">
+            <summary>
+              A simple Parser, used by <see cref="T:Boilerpipe.Net.Extractors.BaseExtractor"/>.
+              The parser uses <a href="https://htmlagilitypack.codeplex.com/">HtmlAgilityPack</a> to parse HTML content.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlParser.#ctor">
+            <summary>
+              Constructs a <see cref="T:Boilerpipe.Net.Sax.BoilerpipeHtmlParser"/> using a default HTML content handler.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlParser.#ctor(Boilerpipe.Net.Sax.BoilerpipeHtmlContentHandler)">
+            <summary>
+              Constructs a <see cref="T:Boilerpipe.Net.Sax.BoilerpipeHtmlParser"/> using the given <see cref="T:Sax.Net.IContentHandler"/>.
+            </summary>
+            <param name="contentHandler">the <see cref="T:Sax.Net.IContentHandler"/> to use</param>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeHtmlParser.ToTextDocument">
+            <summary>
+            Returns a <see cref="T:Boilerpipe.Net.Document.TextDocument"/> containing the extracted <see cref="T:Boilerpipe.Net.Document.TextBlock"/>s.
+            </summary>
+            <returns>The <see cref="T:Boilerpipe.Net.Document.TextDocument"/></returns>
+            <remarks>
+            NOTE: Only call this after <see cref="M:Boilerpipe.Net.Sax.BoilerpipeHtmlParser.Parse(Sax.Net.InputSource)"/>
+            </remarks>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.CommonTagActions">
+            <summary>
+              Defines an action that is to be performed whenever a particular tag occurs during HTML parsing.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.IgnorableElement">
+            <summary>
+              Marks this tag as "ignorable", i.e. all its inner content is silently skipped.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.AnchorText">
+            <summary>
+              Marks this tag as "anchor" (this should usually only be set for the <code>&lt;A&gt;</code> tag).
+              Anchor tags may not be nested.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.Body">
+            <summary>
+              Marks this tag the body element (this should usually only be set for the <code>&lt;BODY&gt;</code> tag).
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.InlineWhitespace">
+            <summary>
+              Marks this tag a simple "inline" element, which generates whitespace, but no new block.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.InlineNoWhitespace">
+            <summary>
+              Marks this tag a simple "inline" element, which neither generates whitespace, nor a new block.
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.BlockLevel">
+            <summary>
+              Explicitly marks this tag a simple "block-level" element, which always generates whitespace
+            </summary>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.CommonTagActions.Font">
+            <summary>
+              Special TagAction for the <code>&lt;FONT&gt;</code> tag, which keeps track of the
+              absolute and relative font size.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.ITagAction">
+            <summary>
+              Defines an action that is to be performed whenever a particular tag occurs during HTML parsing.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.CommonTagActions.BlockTagLabelAction">
+            <summary>
+              <see cref="!:CommonTagActionst"/> for block-level elements, which triggers some <see cref="T:Boilerpipe.Net.Labels.LabelAction"/> on the
+              generated <see cref="T:Boilerpipe.Net.Document.TextBlock"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.CommonTagActions.InlineTagLabelAction">
+            <summary>
+              <see cref="T:Boilerpipe.Net.Sax.CommonTagActions"/> for inline elements, which triggers some <see cref="T:Boilerpipe.Net.Labels.LabelAction"/> on the generated
+              <see cref="T:Boilerpipe.Net.Document.TextBlock"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary">
+            <summary>
+              Default <see cref="T:Boilerpipe.Net.Sax.ITagAction"/>. Seem to work well.
+            </summary>
+            <seealso cref="T:Boilerpipe.Net.Sax.TagActionDictionary"/>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.TagActionDictionary">
+            <summary>
+              Base class for definition a set of <see cref="T:Boilerpipe.Net.Sax.ITagAction"/>s that are to be used for the HTML parsing process.
+            </summary>
+            <seealso cref="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary"/>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.TagActionDictionary.SetTagAction(System.String,Boilerpipe.Net.Sax.ITagAction)">
+            <summary>
+              Sets a particular <see cref="T:Boilerpipe.Net.Sax.ITagAction"/> for a given tag. Any existing TagAction for that tag
+              will be removed and overwritten.
+            </summary>
+            <param name="tag">The tag (will be stored internally 1. as it is, 2. lower-case, 3. upper-case)</param>
+            <param name="action">The <see cref="T:Boilerpipe.Net.Sax.ITagAction"/></param>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.TagActionDictionary.AddTagAction(System.String,Boilerpipe.Net.Sax.ITagAction)">
+            <summary>
+              Adds a particular <see cref="T:Boilerpipe.Net.Sax.ITagAction"/> for a given tag. If a TagAction already exists for that tag,
+              a chained action, consisting of the previous and the new <see cref="T:Boilerpipe.Net.Sax.ITagAction"/> is created.
+            </summary>
+            <param name="tag">The tag (will be stored internally 1. as it is, 2. lower-case, 3. upper-case)</param>
+            <param name="action">The <see cref="T:Boilerpipe.Net.Sax.ITagAction"/></param>
+        </member>
+        <member name="F:Boilerpipe.Net.Sax.DefaultTagActionDictionary.Instance">
+            <summary>
+              The singleton instance for <see cref="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary"/>
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.DefaultTagActionDictionary.#ctor">
+            <summary>
+              Creates a new instance of <see cref="T:Boilerpipe.Net.Sax.DefaultTagActionDictionary"/>
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.Util.UnicodeTokenizer">
+            <summary>
+              Tokenizes text according to Unicode word boundaries and strips off non-word characters.
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.Util.UnicodeTokenizer.Tokenize(System.Text.StringBuilder)">
+            <summary>
+              Tokenizes the text and returns an array of tokens.
+            </summary>
+            <param name="text">The text</param>
+            <returns>The tokens</returns>
+        </member>
+        <member name="T:Boilerpipe.Net.Sax.BoilerpipeSAXInput">
+            <summary>
+                Parses an <see cref="T:Sax.Net.InputSource"/> using SAX and returns a <see cref="T:Boilerpipe.Net.Document.TextDocument"/>.
+            </summary>
+        </member>
+        <member name="T:Boilerpipe.Net.IBoilerpipeInput">
+            <summary>
+            A source that returns <see cref="M:Boilerpipe.Net.IBoilerpipeInput.GetTextDocument"/>s
+            </summary>
+        </member>
+        <member name="M:Boilerpipe.Net.IBoilerpipeInput.GetTextDocument">
+            <summary>
+            Returns (somehow) a <see cref="M:Boilerpipe.Net.IBoilerpipeInput.GetTextDocument"/>.
+            </summary>
+            <returns>A <see cref="M:Boilerpipe.Net.IBoilerpipeInput.GetTextDocument"/></returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeSAXInput.#ctor(Sax.Net.InputSource)">
+            <summary>
+                Creates a new instance of <see cref="T:Boilerpipe.Net.Sax.BoilerpipeSAXInput"/> for the given <see cref="T:Sax.Net.InputSource"/>.
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeSAXInput.GetTextDocument">
+            <summary>
+                Retrieves the {@link TextDocument} using a default HTML parser.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Boilerpipe.Net.Sax.BoilerpipeSAXInput.GetTextDocument(Boilerpipe.Net.Sax.BoilerpipeHtmlParser)">
+            <summary>
+                Retrieves the <see cref="T:Boilerpipe.Net.Document.TextDocument"/> using the given HTML parser.
+            </summary>
+            <param name="parser">The parser used to transform the input into boilerpipe's internal representation.</param>
+            <returns>The retrieved <see cref="T:Boilerpipe.Net.Document.TextDocument"/></returns>
+            <exception cref="T:Boilerpipe.Net.BoilerpipeProcessingException"></exception>
+        </member>
+    </members>
+</doc>
