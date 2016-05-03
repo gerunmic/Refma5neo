@@ -7,26 +7,21 @@ namespace Refma5neo.Models
 {
     public class ArticleDecorator
     {
-        private Dictionary<String, LangElement> dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<String, Knowledge> dic = new Dictionary<string, Knowledge>(StringComparer.OrdinalIgnoreCase);
 
-        public Dictionary<String, LangElement> Dic
+        public Dictionary<String, Knowledge> Dic
         {
             get { return dic; }
             set { dic = value; }
         }
-        private Dictionary<int, UserLangElement> dicUser = new Dictionary<int, UserLangElement>();
 
-        public Dictionary<int, UserLangElement> DicUser
-        {
-            get { return dicUser; }
-            set { dicUser = value; }
-        }
         private WebArticle article = null;
+        private string userid;
 
-
-        public ArticleDecorator(WebArticle article, Boolean readFromDatabase = true)
+        public ArticleDecorator(WebArticle article, string userid, Boolean readFromDatabase = true)
         {
             this.article = article;
+            this.userid = userid;
 
             if (readFromDatabase)
             {
@@ -39,31 +34,16 @@ namespace Refma5neo.Models
         {
             using (GraphDbContext db = new GraphDbContext())
             {
-                
 
-                var allElements = db.getWebArticleElements(article);
-
-
-                var userElements = db.getWebArticleUserElements(article);
+                var allElements = db.getWebArticleUserElements(article, userid);
+       
 
 
-                foreach (var e in userElements.ToList<UserLangElement>())
+                foreach (var e in allElements.ToList<ViewArticleElement>())
                 {
                     try
                     {
-                        dicUser.Add(e.LangElementId, e);
-                    }
-                    catch (ArgumentException x)
-                    {
-
-                    }
-                }
-
-                foreach (var e in allElements.ToList<LangElement>())
-                {
-                    try
-                    {
-                        dic.Add(e.Value, e);
+                        dic.Add(e.Value, e.Knowledge);
                     }
                     catch (ArgumentException x)
                     {
@@ -89,20 +69,12 @@ namespace Refma5neo.Models
             {
                 if (dic.ContainsKey(str))
                 {
-                    LangElement element = null;
-                    UserLangElement ue = null;
-                    dic.TryGetValue(str, out element);
+                    Knowledge k = Knowledge.Unknown;
+                
+                    dic.TryGetValue(str, out k);
 
-                    if (dicUser.ContainsKey(element.ID))
-                    {
-                        dicUser.TryGetValue(element.ID, out ue);
-                    }
-
-                    ViewArticleElement ve = new ViewArticleElement() { LangElementId = element.ID, Value = str, Knowledge = Knowledge.Unknown };
-                    if (ue != null)
-                    {
-                        ve.Knowledge = ue.Knowledge;
-                    }
+                    ViewArticleElement ve = new ViewArticleElement() {  Value = str, Knowledge = k };
+   
 
                     viewElements.Add(ve);
                 }

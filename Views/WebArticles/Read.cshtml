@@ -1,5 +1,5 @@
-﻿@using Refma.Models
-@model Refma.Models.WebArticle
+﻿@using Refma5neo.Models
+@model Refma5neo.Models.WebArticle
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,8 +10,8 @@
 @section CustomJavascript {
     <script type="text/javascript">
 
-        var currentLang = @Html.Raw(Json.Encode(Model.Lang.Code));
-        var currentArticleID = @Model.ID;
+        var currentLang = @Html.Raw(Json.Encode(Model.langcode));
+        var currentArticleID = @Model.id;
 
         $(document).ready(function () {
 
@@ -30,8 +30,8 @@
             function updateElement(eid, k) {
                 $.ajax({
                     type: "POST",
-                    url: '/LangElement/UpdateElementJSON',
-                    data: { elementid: eid, knowledge: k },
+                    url: '/WebArticles/UpdateElementJSON',
+                    data: { value: eid, langcode: currentLang, knowledge: k },
                     success: function () {
                         // do not do anything
                     }
@@ -130,12 +130,12 @@
 }
 
 
-<div dir="auto" lang="@Model.Lang.Code">
-    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
+<div dir="auto" lang="@Model.langcode">
+    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/) no-repeat; background-size: 30px 30px;"></div>
 
-    <h2>@Html.DisplayFor(model => model.Title)</h2>
+    <h2>@Html.DisplayFor(model => model.title)</h2>
 
-    <span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.Lang.Code','@Model.Title')"></span>
+    <span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.langcode','@Model.title')"></span>
 
     <div id="percentage"></div>
     <hr />
@@ -172,7 +172,7 @@
 
                 }
  
-                <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
+                <span data-eid="@el.Value" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
             }
         }
     </div>

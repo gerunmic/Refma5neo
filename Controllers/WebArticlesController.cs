@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Refma5neo.Models;
+using System.Collections.Generic;
+using System.Net;
 
 namespace Refma5neo.Controllers
 {
@@ -29,9 +28,37 @@ namespace Refma5neo.Controllers
         }
 
         // GET: WebArticles/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Read(int id)
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (GraphDbContext db = new GraphDbContext())
+            {
+                WebArticle webarticle = db.getWebArticle(id);
+            if (webarticle == null)
+                {
+                    return HttpNotFound();
+                }
+
+               
+                ArticleDecorator decorator = new ArticleDecorator(webarticle, User.Identity.GetUserId());
+                List<ViewArticleElement> viewElements = decorator.GetAllViewElements();
+
+      
+
+                ViewBag.ViewElements = viewElements;
+
+                return View(webarticle);
+            }
+ 
         }
 
         // GET: WebArticles/Create
@@ -98,6 +125,18 @@ namespace Refma5neo.Controllers
             {
                 return View();
             }
+        }
+
+
+        public JsonResult UpdateElementJSON(string value, string langcode, int knowledge)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            using (GraphDbContext db  = new GraphDbContext())
+            {
+                db.updateRating(value, langcode, knowledge, currentUserId);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

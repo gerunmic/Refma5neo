@@ -19,6 +19,8 @@ namespace Refma5neo.Models {
     public String title { get; set; }
         public String url { get; set; }
         public String plaintext { get; set; }
+
+        public String langcode { get; set; }
     }
 
 
