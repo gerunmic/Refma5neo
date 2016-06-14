@@ -11,7 +11,7 @@
     @Html.ActionLink("Add new article", "Create", new { }, new { @type = "button", @class = "btn btn-default" })
 </p>
 
-<table class="table" dir="auto" lang="@ViewBag.LangCode">
+<table class="table" dir="auto">
 
 
     @foreach (var item in Model)
@@ -19,6 +19,7 @@
         <tr>
             <td style="vertical-align:middle !important">
                
+          
                 <b>@Html.ActionLink(item.title, "Read", new { id = item.id }) </b>
 
             </td>

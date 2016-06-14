@@ -80,7 +80,9 @@ namespace Refma5neo.Models
                 }
                 else
                 {
-                    viewElements.Add(new ViewArticleElement() { IsNotAWord = true, Value = str });
+
+                    bool isNotAWord = Regex.Match(str, SpecialCharactersClass.getNonLetterPattern()).Success;
+                    viewElements.Add(new ViewArticleElement() { IsNotAWord = isNotAWord, Value = str });
                 }
             }
             return viewElements;

@@ -1,4 +1,4 @@
-﻿@model Refma.Models.WebArticle
+﻿@model Refma5neo.Models.WebArticle
 
 @{
     ViewBag.Title = "Add article";
@@ -17,35 +17,36 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Lang, new { @class = "control-label  col-md-2" })
+            @Html.LabelFor(model => model.langcode, new { @class = "control-label  col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.LangId, new SelectList(ViewBag.LangList, "Id", "Name", ViewBag.CurrentTargetLangId), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LangId)
+             
+                @Html.DropDownListFor(model => model.langcode, new SelectList(ViewBag.LangList, "Code", "Name", ViewBag.CurrentTargetLangId), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.langcode)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.URL, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.url, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.URL, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                @Html.ValidationMessageFor(model => model.URL)
+                @Html.TextBoxFor(model => model.url, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.url)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.title, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Title, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                @Html.ValidationMessageFor(model => model.Title)
+                @Html.TextBoxFor(model => model.title, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.title)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PlainText, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.plaintext, new { @class = "control-label col-md-2" })
            
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.PlainText, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                @Html.ValidationMessageFor(model => model.PlainText)
+                @Html.TextAreaFor(model => model.plaintext, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.plaintext)
             </div>
         </div>
 

@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Refma5neo.Models;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Refma5neo.Controllers
 {
@@ -64,6 +65,22 @@ namespace Refma5neo.Controllers
         // GET: WebArticles/Create
         public ActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            string userId = User.Identity.GetUserId();
+            using (GraphDbContext db = new GraphDbContext())
+            {
+
+
+                ViewBag.CurrentTargetLangId = "en";// currentUser.TargetLangId;
+
+            List<Lang> langList;
+                langList = db.getLanguages();
+            ViewBag.LangList = langList;
+            }
             return View();
         }
 
@@ -71,16 +88,44 @@ namespace Refma5neo.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
+            WebArticle w = new WebArticle();
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                string userId = User.Identity.GetUserId();
+
+                
+                w.url = collection["url"];
+                w.title = collection["title"];
+                w.plaintext = collection["plaintext"];
+                w.langcode = collection["langcode"];
+
+            
+                    string title;
+                    w.plaintext = WebtextExtractor.ExtractTextOnly(w.url, out title);
+                    w.plaintext = WebUtility.HtmlDecode(w.plaintext);
+
+                if (w.title.Length == 0)
+                {
+                    w.title = WebUtility.HtmlDecode(title);
+                }
+
+
+               
+
+                    using (GraphDbContext db = new GraphDbContext())
+                {
+                    db.addWebArticle(w, userId);
+
+                    w.tokens = Boilerpipe.Net.Util.UnicodeTokenizer.Tokenize(new System.Text.StringBuilder(w.plaintext));
+
+                    db.addWebArticleWords(w);
+                }
+
+               // return RedirectToAction("Read", new { id = w.id });
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: WebArticles/Edit/5

@@ -16,7 +16,7 @@ namespace Refma5neo
         private void ConfigureNeo4j(IAppBuilder app)
         {
             app.CreatePerOwinContext(() => {
-                var gc = new GraphClient(new Uri("http://localhost:7474/db/data"));
+                var gc = new Neo4jClient.GraphClient(new Uri("http://refmadb.sb11.stations.graphenedb.com:24789/db/data/"), "refmadb", "QWacePxs3Xxof1QWszF2");
                 gc.Connect();
                 var gcw = new GraphClientWrapper(gc);
                 return gcw;
